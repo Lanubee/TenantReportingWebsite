@@ -4,4 +4,7 @@ html{
 
 .buttons-list{
   cursor: pointer;
+  position: absolute;
+  vertical-align: middle;
+  align-items: flex-start;
 }
