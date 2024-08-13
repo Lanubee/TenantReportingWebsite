@@ -1,5 +1,6 @@
-import './homePage.css';
+import './HomePage.css';
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Importing Images
 import lightingImage from '../images/lightbulb.jpg';
@@ -29,9 +30,9 @@ import kitchenImage from '../images/kitchen.png';
 
 
 export const HomePage = () => {
+  const navigate = useNavigate();
+
   const [selectedProblem, setSelectedProblem] = useState(null);
-  const [selectedProblem2, setSelectedProblem2] = useState(null);
-  const [bathAndToiletVisible, setBathAndToiletVisible] = useState(false);
 
   const buttons = [
     { buttonText: 'Bathroom and Toilet', imageSrc: plumbingImage},
@@ -60,35 +61,25 @@ export const HomePage = () => {
     { buttonText: 'Other', imageSrc: otherImage}
   ];
 
-  const bathAndToiletItems = [
-    { value: 'sink', label: 'Sink'},
-    { value: 'bath', label: 'Bath'},
-    { value: 'electricShower', label: 'Electric Shower'},
-    { value: 'extractorFan', label: 'Extractor Fan'},
-    { value: 'shower', label: 'Shower'},
-    { value: 'toilet', label: 'Toilet'}
-  ]
-
   /***
    * Method for handling when a button option is clicked
    * Sets 'selectedProblem' variable to a value selected
    */
   const handleProblemSelection = (buttonText) => {
     setSelectedProblem(buttonText);
+    goToDetails();
+
+    
     console.log('Selected Problem: ' + buttonText)
-    console.log('bathandtoiletvisible: ' + bathAndToiletVisible)
   };
 
-  useEffect(() => {
-    if(selectedProblem === 'Bathroom and Toilet'){
-      setBathAndToiletVisible(true);
-    }
-    else{
-      setBathAndToiletVisible(false);
-    }
 
-  },[selectedProblem, setBathAndToiletVisible])
-
+  /***
+   * Method for navigating to the Details page
+   */
+  const goToDetails = () => {
+    navigate('/Details');
+  }
 
 
   return (
@@ -112,23 +103,79 @@ export const HomePage = () => {
         ))}
       </div>
 
+    {/* Div for when the option 'bath and toilet' is selected. Hidden otherwise.
+    {selectedProblem === 'Bathroom and Toilet' && (
       <div 
-      className='bath-and-toilet-selected' 
-      style={{display : bathAndToiletVisible ? 'block' : 'none'}}>
-  {bathAndToiletItems.map(({ value, label }, index) => (
-    <div key={index}>
-      <input
-        name="bathAndToilet"
-        type="radio"
-        value={value}
-        id={value}
-        onChange={e => setSelectedProblem2(e.target.value)}
-      />
-      <label htmlFor={value}>{label}</label>
-    </div>
-  ))}
-</div>
+        className='bath-and-toilet-selected'>
+        {bathAndToiletItems.map(({ value, label }, index) => (
+          <div key={index}>
+            <input
+              name="bathAndToilet"
+              type="radio"
+              value={value}
+              id={value}
+              onChange={e => setSelectedProblem2(e.target.value)}
+              />
+            <label htmlFor={value}>{label}</label>
+          </div>
+        ))}
+      </div> 
+    )}
 
+      
+    {/* Div for when the option 'Lighting' is selected. Hidden otherwise. */}
+    {/* {selectedProblem === 'Lighting' && (
+        <div className='lighting-selected'>
+          {lightingItems.map(({ value, label }, index) => (
+            <div key={index}>
+              <input
+                name = "lighting"
+                type = "radio"
+                value = {value}
+                id = {value}
+                onChange = {e => setSelectedProblem2(e.target.value)}
+              />
+            <label htmlFor = {value}>{label}</label>
+          </div>
+        ))}
+      </div>  
+    )} */}
+
+    {/* Div for when the option 'Kitchen' is selected. Hidden otherwise. */}
+    {/* {selectedProblem === 'Kitchen' && (
+      <div className='kitchen-selected'>
+        {kitchenItems.map(({ value, label}, index) => (
+          <div key={index}>
+            <input
+              name = "kitchen"
+              type = "radio"
+              value = {value}
+              id = {value}
+              onChange = {e => setSelectedProblem2(e.target.value)}
+            />
+            <label htmlFor = {value}>{label}</label>
+          </div>
+        ))}
+      </div>
+    )} */}
+
+    {/* Div for when the option 'Kitchen' is selected. Hidden otherwise. */}
+    {/* {selectedProblem === 'Electricity' && (
+      <div className='electricity-selected'>
+        {electricityItems.map(({ value, label}, index) => (
+          <div key={index}>
+            <input
+              name = "electricity"
+              type = "radio"
+              value = {value}
+              id = {value}
+              onChange = {e => setSelectedProblem2(e.target.value)}
+            />
+            <label htmlFor = {value}>{label}</label>
+          </div>
+        ))}
+      </div>
+    )} */}
     </div>
   );
 }
